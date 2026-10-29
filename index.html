@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yassine Ayadi — Software Engineering Portfolio</title>
+    <meta name="description" content="Interactive 3D developer portfolio of Yassine Ayadi, Software Engineering student at EPI." />
+    <meta property="og:title" content="Yassine Ayadi — Software Engineering Portfolio" />
+    <meta property="og:description" content="Interactive 3D developer portfolio of Yassine Ayadi, Software Engineering student at EPI." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body>
+    <div class="app-viewport">
+      <!-- Outer Showcase Frame -->
+      <div class="showcase-frame" id="showcaseFrame">
+        <!-- 3D WebGL Canvas Mount Container -->
+        <div id="canvasContainer"></div>
+
+        <!-- Top Controls / Status HUD -->
+        <div class="top-controls">
+          <!-- Back to room button (visible when zoomed into a section) -->
+          <button class="back-room-btn" id="backToRoomBtn" title="Return to room overview">
+            <span class="back-arrow">‹</span>
+            <span>BACK TO THE ROOM</span>
+          </button>
+
+          <div class="top-badge-left" id="topBadgeLeft">
+            <span class="live-dot"></span>
+            <span>EPI SOFTWARE ENGINEERING · 2026</span>
+          </div>
+
+          <div class="top-actions-right">
+            <!-- Calm Music Player Pill -->
+            <div class="music-player-pill" id="musicPlayerWidget">
+              <button class="music-play-btn" id="soundToggleBtn" aria-label="Play or pause calm music">
+                <span class="music-bars" id="musicBars">
+                  <span class="bar bar-1"></span>
+                  <span class="bar bar-2"></span>
+                  <span class="bar bar-3"></span>
+                </span>
+                <span id="soundLabel">Play Calm Music</span>
+              </button>
+
+              <div class="music-volume-group" id="musicVolumeGroup">
+                <span class="vol-icon">🔉</span>
+                <input type="range" id="musicVolumeSlider" min="0" max="100" value="65" class="music-slider" title="Music Volume" />
+              </div>
+
+              <div class="music-themes-wrap">
+                <button class="theme-chip active" data-theme="twilight" title="Twilight Ambient">Twilight</button>
+                <button class="theme-chip" data-theme="cozy" title="Cozy Warm Piano">Cozy</button>
+                <button class="theme-chip" data-theme="rainy" title="Night Rain Chimes">Rainy</button>
+              </div>
+            </div>
+
+            <button class="action-pill-btn" id="camResetBtn" title="Reset camera view">
+              <span>⟲</span>
+              <span>Overview</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Floating Hotspot Interaction Hint -->
+        <div class="hotspot-hint" id="hotspotHint">
+          <span class="diamond-icon">◆</span>
+          <span id="hintText">Hover or click glowing diamonds to explore workstation</span>
+        </div>
+
+        <!-- Hero Typography Overlay (Overview mode) -->
+        <div class="hero-overlay-hud" id="heroOverlayHud">
+          <div class="hero-status-tag">
+            <span class="tag-dot"></span>
+            <span>SOFTWARE ENGINEERING · EPI / TUNISIA</span>
+          </div>
+          <h1 class="hero-title-name">Yassine Ayadi</h1>
+          <span class="hero-domain-link">YASSINEAYADI.ME</span>
+        </div>
+
+        <!-- ================= IN-SCENE ZOOMED SECTION OVERLAYS ================= -->
+
+        <!-- 1. PROJECTS VIEW (Over Monitor: OS Desktop Windowing System) -->
+        <div class="zoomed-view-overlay" id="viewProjects" style="display: none;">
+          <div class="os-screen-container">
+            <!-- OS Menu Bar -->
+            <div class="os-topbar">
+              <div class="os-topbar-left">
+                <span class="os-apple-icon">◈</span>
+                <span class="os-menu-item active">Campus Hub</span>
+                <span class="os-menu-item">TaskFlow</span>
+                <span class="os-menu-item">WeatherPulse</span>
+                <span class="os-menu-item">Terminal</span>
+              </div>
+              <div class="os-topbar-center">
+                <span id="osClock">Thu 29 Oct 18:12</span>
+              </div>
+              <div class="os-topbar-right">
+                <span>📶 100%</span>
+                <span>🔋 98%</span>
+                <span class="os-badge-user">YA</span>
+              </div>
+            </div>
+
+            <!-- OS Desktop Windows Grid -->
+            <div class="os-desktop-area">
+              <!-- Window 1: Campus Study Hub Project -->
+              <div class="os-window os-window-main">
+                <div class="os-win-header">
+                  <div class="win-traffic-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                  </div>
+                  <span class="win-title">Campus Study Hub — Academic Platform</span>
+                  <div class="win-tabs">
+                    <button class="win-tab-btn active" data-tab="tabOverview">Overview</button>
+                    <button class="win-tab-btn" data-tab="tabData">Notes Table</button>
+                    <button class="win-tab-btn" data-tab="tabCode">Architecture</button>
+                  </div>
+                </div>
+
+                <div class="os-win-body">
+                  <!-- Tab 1: Overview -->
+                  <div class="win-tab-content" id="tabOverview">
+                    <div class="os-hero-box">
+                      <span class="os-pill-tag">PROJECT 01</span>
+                      <h2 style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin: 4px 0;">Campus Study Hub</h2>
+                      <p style="color: #94a3b8; font-size: 0.92rem; line-height: 1.5;">
+                        A centralized platform for students at EPI to organize, access, and share academic lecture notes, exam summaries, and study resources.
+                      </p>
+                    </div>
+
+                    <div class="os-interactive-grid">
+                      <div class="os-mini-card">
+                        <span class="mini-label">Active Modules</span>
+                        <span class="mini-val">Computer Architecture, Algorithms, Web Dev, Databases</span>
+                      </div>
+                      <div class="os-mini-card">
+                        <span class="mini-label">Key Stack</span>
+                        <span class="mini-val">HTML5 · CSS3 · TypeScript · REST APIs</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Tab 2: Notes Table -->
+                  <div class="win-tab-content" id="tabData" style="display: none;">
+                    <table class="os-table">
+                      <thead>
+                        <tr>
+                          <th>Course Name</th>
+                          <th>Semester</th>
+                          <th>Category</th>
+                          <th>Resources</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Software Engineering &amp; OOP</td>
+                          <td>S5</td>
+                          <td>Core Eng</td>
+                          <td>14 PDFs, 6 Labs</td>
+                          <td><span class="status-badge-ok">Verified</span></td>
+                        </tr>
+                        <tr>
+                          <td>Web Architecture &amp; TypeScript</td>
+                          <td>S5</td>
+                          <td>Frontend</td>
+                          <td>Projects, Cheatsheets</td>
+                          <td><span class="status-badge-ok">Live</span></td>
+                        </tr>
+                        <tr>
+                          <td>Relational Databases &amp; SQL</td>
+                          <td>S4</td>
+                          <td>Backend</td>
+                          <td>Schema Diagrams, Queries</td>
+                          <td><span class="status-badge-ok">Available</span></td>
+                        </tr>
+                        <tr>
+                          <td>Algorithms &amp; Data Structures</td>
+                          <td>S3</td>
+                          <td>Theory</td>
+                          <td>Problem Sets, Solutions</td>
+                          <td><span class="status-badge-ok">Complete</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Tab 3: Code / Readme -->
+                  <div class="win-tab-content" id="tabCode" style="display: none;">
+                    <div class="os-terminal-view">
+                      <div class="term-header">terminal ~ cat README.md</div>
+                      <pre class="term-code"><code># Campus Study Hub
+Built with TypeScript, HTML, CSS for students at EPI.
+
+- Zero external framework overhead for ultra-fast mobile loading
+- Client-side search and category filtering
+- Local storage offline caching of study documents
+- Clean responsive card layout designed for phone and desktop</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Side Window: Additional Projects & Readme -->
+              <div class="os-window os-window-side">
+                <div class="os-win-header">
+                  <div class="win-traffic-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                  </div>
+                  <span class="win-title">Other Projects</span>
+                </div>
+                <div class="os-win-body" style="padding: 14px;">
+                  <!-- Project 2 -->
+                  <div class="os-project-pill">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <strong style="color: #ffffff; font-size: 0.95rem;">TaskFlow Manager</strong>
+                      <span class="os-pill-badge">Productivity</span>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 0.82rem; margin-top: 4px;">
+                      Lightweight task and productivity organizer designed for personal task management with categorization and local persistence.
+                    </p>
+                  </div>
+
+                  <!-- Project 3 -->
+                  <div class="os-project-pill" style="margin-top: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <strong style="color: #ffffff; font-size: 0.95rem;">WeatherPulse Dashboard</strong>
+                      <span class="os-pill-badge" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15);">Weather API</span>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 0.82rem; margin-top: 4px;">
+                      Minimalist weather tracking interface delivering clean forecasts, atmospheric metrics, and city search without ads.
+                    </p>
+                  </div>
+
+                  <!-- AI / Coder Note -->
+                  <div class="os-quote-card" style="margin-top: 12px;">
+                    <p style="font-weight: 700; color: #f43f5e; font-size: 0.85rem;">Developer Note</p>
+                    <p style="color: #cbd5e1; font-size: 0.8rem; margin-top: 2px;">
+                      "I enjoy building clean, responsive web applications and intuitive digital tools."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. EXPERIENCE VIEW (Over Pegboard: 5 Hanging Badges Carousel with Flip) -->
+        <div class="zoomed-view-overlay" id="viewExperience" style="display: none;">
+          <div class="pegboard-overlay-container">
+            <div class="pegboard-header-bar">
+              <span class="peg-tag">CAREER &amp; ACADEMICS</span>
+              <h2 class="peg-title">Experience &amp; Badges</h2>
+              <p class="peg-subtitle">Click on any lanyard card to flip and view details.</p>
+            </div>
+
+            <!-- Badges Track -->
+            <div class="badge-carousel-stage">
+              <!-- Badge 1: EPI Student -->
+              <div class="badge-flip-card active" data-index="0" id="badge0">
+                <div class="badge-inner">
+                  <div class="badge-face badge-front badge-front-orange">
+                    <div class="badge-lanyard-hole"></div>
+                    <div class="badge-header-band band-orange">
+                      <span>EPI DIGITAL SCHOOL</span>
+                    </div>
+                    <div class="badge-photo-slot">
+                      <div class="badge-avatar">YA</div>
+                    </div>
+                    <h3 class="badge-name">Yassine Ayadi</h3>
+                    <p class="badge-role">Software Engineering Student</p>
+                    <p class="badge-dates">SEP 2023 — PRESENT</p>
+                    <div class="badge-barcode">||| | |||| | || ||| |||||</div>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                  <div class="badge-face badge-back">
+                    <p class="badge-back-title">Academic Highlights</p>
+                    <ul class="badge-back-list">
+                      <li>École Pluridisciplinaire Internationale</li>
+                      <li>Algorithms, Data Structures &amp; OOP</li>
+                      <li>Modern Web Systems &amp; Software Design</li>
+                      <li>Database Management &amp; SQL</li>
+                    </ul>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Badge 2: Campus Study Hub -->
+              <div class="badge-flip-card" data-index="1" id="badge1">
+                <div class="badge-inner">
+                  <div class="badge-face badge-front badge-front-teal">
+                    <div class="badge-lanyard-hole"></div>
+                    <div class="badge-header-band band-teal">
+                      <span>Campus Study Hub</span>
+                    </div>
+                    <div class="badge-photo-slot">
+                      <div class="badge-avatar" style="background: #0d9488;">CS</div>
+                    </div>
+                    <h3 class="badge-name">Founding Engineer</h3>
+                    <p class="badge-role">Lead Web Architect</p>
+                    <p class="badge-dates">2024 — PRESENT</p>
+                    <div class="badge-barcode">|| |||| | ||| || |||| |</div>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                  <div class="badge-face badge-back">
+                    <p class="badge-back-title">Project Scope</p>
+                    <ul class="badge-back-list">
+                      <li>Engineered centralized notes archive</li>
+                      <li>TypeScript-first responsive architecture</li>
+                      <li>Fast offline client-side caching</li>
+                      <li>Over 1,000+ course materials cataloged</li>
+                    </ul>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Badge 3: Web Systems Lab -->
+              <div class="badge-flip-card" data-index="2" id="badge2">
+                <div class="badge-inner">
+                  <div class="badge-face badge-front badge-front-dark">
+                    <div class="badge-lanyard-hole"></div>
+                    <div class="badge-header-band band-dark">
+                      <span>Web Systems Lab</span>
+                    </div>
+                    <div class="badge-photo-slot">
+                      <div class="badge-avatar" style="background: #334155;">WS</div>
+                    </div>
+                    <h3 class="badge-name">Fullstack Developer</h3>
+                    <p class="badge-role">Frontend &amp; API Integration</p>
+                    <p class="badge-dates">2023 — 2024</p>
+                    <div class="badge-barcode">|||| | || |||| | ||| ||</div>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                  <div class="badge-face badge-back">
+                    <p class="badge-back-title">Contributions</p>
+                    <ul class="badge-back-list">
+                      <li>Modern UI components with clean CSS</li>
+                      <li>REST API consumption &amp; data models</li>
+                      <li>Cross-browser performance optimization</li>
+                      <li>Git version control and collaborative PRs</li>
+                    </ul>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Badge 4: Open Source -->
+              <div class="badge-flip-card" data-index="3" id="badge3">
+                <div class="badge-inner">
+                  <div class="badge-face badge-front badge-front-blue">
+                    <div class="badge-lanyard-hole"></div>
+                    <div class="badge-header-band band-blue">
+                      <span>Open Source Contributor</span>
+                    </div>
+                    <div class="badge-photo-slot">
+                      <div class="badge-avatar" style="background: #2563eb;">OS</div>
+                    </div>
+                    <h3 class="badge-name">TypeScript &amp; Tools</h3>
+                    <p class="badge-role">Community Creator</p>
+                    <p class="badge-dates">2024 — PRESENT</p>
+                    <div class="badge-barcode">|| | ||||| || ||| | |||</div>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                  <div class="badge-face badge-back">
+                    <p class="badge-back-title">Open Source Work</p>
+                    <ul class="badge-back-list">
+                      <li>GitHub open repositories</li>
+                      <li>Clean TypeScript utility libraries</li>
+                      <li>Interactive web simulations &amp; Canvas</li>
+                      <li>Documentation and issue triaging</li>
+                    </ul>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Badge 5: Tech Club -->
+              <div class="badge-flip-card" data-index="4" id="badge4">
+                <div class="badge-inner">
+                  <div class="badge-face badge-front badge-front-purple">
+                    <div class="badge-lanyard-hole"></div>
+                    <div class="badge-header-band band-purple">
+                      <span>EPI Tech Club</span>
+                    </div>
+                    <div class="badge-photo-slot">
+                      <div class="badge-avatar" style="background: #7c3aed;">TC</div>
+                    </div>
+                    <h3 class="badge-name">Frontend Lead</h3>
+                    <p class="badge-role">Workshop Mentor</p>
+                    <p class="badge-dates">2024 — 2025</p>
+                    <div class="badge-barcode">|||| ||| | || | |||| ||</div>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                  <div class="badge-face badge-back">
+                    <p class="badge-back-title">Leadership</p>
+                    <ul class="badge-back-list">
+                      <li>Organized HTML5/CSS3 workshops</li>
+                      <li>Mentored 40+ first-year students</li>
+                      <li>Hackathon coordination and judging</li>
+                      <li>Best Practices &amp; Clean Code advocacy</li>
+                    </ul>
+                    <span class="badge-flip-hint">CLICK TO FLIP ⟳</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Badge Carousel Controls (matching < 01/05 > in video) -->
+            <div class="peg-carousel-controls">
+              <button class="peg-nav-btn" id="badgePrevBtn">‹</button>
+              <span class="peg-counter" id="badgeCounter">01 / 05</span>
+              <button class="peg-nav-btn" id="badgeNextBtn">›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. ABOUT VIEW (Over Robot Face: Interactive Chat & Bio) -->
+        <div class="zoomed-view-overlay" id="viewAbout" style="display: none;">
+          <div class="robot-screen-terminal">
+            <div class="robot-tabs-bar">
+              <button class="robot-tab active" id="tabBtnChat">CHAT</button>
+              <button class="robot-tab" id="tabBtnBio">ABOUT</button>
+            </div>
+
+            <!-- Chat Content -->
+            <div class="robot-tab-panel" id="panelChat">
+              <div class="robot-messages-box" id="robotMessagesBox">
+                <div class="bot-msg-bubble">
+                  Hey, I'm Yassine's AI, the one that doesn't sleep. Ask me anything about him, and if you want the real Yassine, check his phone.
+                </div>
+              </div>
+
+              <!-- Quick prompts -->
+              <div class="robot-quick-prompts">
+                <button class="quick-chip" data-q="What are your studies and university?">Studies @ EPI</button>
+                <button class="quick-chip" data-q="What projects have you built?">Projects</button>
+                <button class="quick-chip" data-q="What are your technical skills?">Skills</button>
+                <button class="quick-chip" data-q="How can I contact Yassine?">Contact</button>
+              </div>
+
+              <!-- Input form -->
+              <form class="robot-input-bar" id="robotChatForm">
+                <input type="text" id="robotInputText" placeholder="Type a message..." autocomplete="off" />
+                <button type="submit" class="robot-send-btn">Send</button>
+              </form>
+            </div>
+
+            <!-- Bio Content -->
+            <div class="robot-tab-panel" id="panelBio" style="display: none;">
+              <div class="robot-bio-content">
+                <h3 style="color: #f43f5e; font-size: 1.15rem; margin-bottom: 8px;">About Yassine Ayadi</h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px;">
+                  Software Engineering student at <strong>EPI (École Pluridisciplinaire Internationale)</strong> based in Tunisia. Passionate about software architecture, clean user interfaces, and modular programming.
+                </p>
+                <div class="robot-stat-box">
+                  <strong style="color: #ffffff;">What I enjoy building:</strong>
+                  <p style="color: #94a3b8; margin-top: 4px;">
+                    "I enjoy building clean, responsive web applications and intuitive digital tools."
+                  </p>
+                </div>
+                <div style="margin-top: 14px; font-size: 0.88rem; color: #38bdf8;">
+                  💡 Click on the phone on the desk or the Contact tab to reach out directly!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. CONTACT VIEW (Over Smartphone on desk: Interactive Lockscreen) -->
+        <div class="zoomed-view-overlay" id="viewContact" style="display: none;">
+          <div class="phone-screen-device">
+            <div class="phone-speaker-notch"></div>
+
+            <!-- Lockscreen Header -->
+            <div class="phone-lock-time" id="phoneClock">23:06</div>
+            <div class="phone-lock-date" id="phoneDate">Thursday, 29 October</div>
+
+            <!-- Identity Card -->
+            <div class="phone-id-card">
+              <div class="phone-user-row">
+                <div class="phone-avatar">YA</div>
+                <div>
+                  <h3 class="phone-username">Yassine Ayadi</h3>
+                  <p class="phone-user-sub">Software Engineer @ EPI</p>
+                </div>
+              </div>
+
+              <!-- Quick action tiles -->
+              <div class="phone-action-grid">
+                <button class="phone-action-tile" id="phoneCopyEmailBtn">
+                  <span class="tile-icon">✉</span>
+                  <div class="tile-texts">
+                    <span class="tile-title">Email</span>
+                    <span class="tile-sub" id="phoneEmailLabel">yassineayadi273@gmail.com</span>
+                  </div>
+                  <span class="tile-action">Copy</span>
+                </button>
+
+                <a href="https://github.com/yassineayadi273" target="_blank" rel="noopener noreferrer" class="phone-action-tile">
+                  <span class="tile-icon">🐙</span>
+                  <div class="tile-texts">
+                    <span class="tile-title">GitHub</span>
+                    <span class="tile-sub">github.com/yassineayadi273</span>
+                  </div>
+                  <span class="tile-action">Open ↗</span>
+                </a>
+
+                <a href="mailto:yassineayadi273@gmail.com?subject=Portfolio%20Inquiry" class="phone-action-tile">
+                  <span class="tile-icon">💬</span>
+                  <div class="tile-texts">
+                    <span class="tile-title">Direct Note</span>
+                    <span class="tile-sub">Open email client</span>
+                  </div>
+                  <span class="tile-action">Write ↗</span>
+                </a>
+              </div>
+
+              <!-- Resume Action Pill -->
+              <a href="mailto:yassineayadi273@gmail.com?subject=Request%20Resume" class="phone-resume-btn">
+                <span>📄 Request Curriculum Vitae (CV)</span>
+              </a>
+            </div>
+
+            <!-- Bottom Quick App Icons -->
+            <div class="phone-dock-icons">
+              <a href="mailto:yassineayadi273@gmail.com" class="app-icon" title="Email">✉</a>
+              <a href="https://github.com/yassineayadi273" target="_blank" rel="noopener noreferrer" class="app-icon" title="GitHub">🐙</a>
+              <button class="app-icon" id="phonePlayMusicIcon" title="Play Calm Music">♫</button>
+              <button class="app-icon" id="phoneBackRoomIcon" title="Back to Room">⟲</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. AUDIO VIEW (Over Speaker: Spotify Player Card) -->
+        <div class="zoomed-view-overlay" id="viewAudio" style="display: none;">
+          <div class="speaker-player-card">
+            <div class="sp-album-art">
+              <span class="sp-vinyl-disc"></span>
+              <div class="sp-art-gradient">♫</div>
+            </div>
+
+            <div class="sp-details">
+              <span class="sp-last-played">LAST PLAYED: JUST NOW</span>
+              <h2 class="sp-track-title" id="spTrackTitle">Calm Twilight Ambience</h2>
+              <p class="sp-track-artist">Yassine Ayadi • Lo-Fi Chill Synthesizer</p>
+
+              <div class="sp-controls-row">
+                <button class="sp-play-toggle" id="spPlayBtn">
+                  <span id="spPlayIcon">⏸</span>
+                  <span id="spPlayText">Pause</span>
+                </button>
+
+                <div class="sp-volume-bar-wrap">
+                  <span>🔉</span>
+                  <input type="range" id="spVolumeSlider" min="0" max="100" value="65" class="music-slider" />
+                </div>
+              </div>
+
+              <div class="sp-mood-pills">
+                <button class="sp-mood-btn active" data-theme="twilight">Twilight</button>
+                <button class="sp-mood-btn" data-theme="cozy">Cozy Piano</button>
+                <button class="sp-mood-btn" data-theme="rainy">Night Rain</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= BOTTOM NAVIGATION DOCK (matching video) ================= -->
+        <nav class="dock-container" id="bottomDockBar" aria-label="Portfolio navigation dock">
+          <button class="dock-nav-tab" data-target="projects" id="dockNavProjects">
+            <span class="dock-arrows">‹ ›</span>
+            <span>PROJECTS</span>
+          </button>
+          <button class="dock-nav-tab" data-target="experience" id="dockNavExperience">
+            <span class="dock-arrows">‹ ›</span>
+            <span>EXPERIENCE</span>
+          </button>
+          <button class="dock-nav-tab" data-target="about" id="dockNavAbout">
+            <span class="dock-arrows">‹ ›</span>
+            <span>ABOUT</span>
+          </button>
+          <button class="dock-nav-tab" data-target="contact" id="dockNavContact">
+            <span class="dock-arrows">‹ ›</span>
+            <span>CONTACT</span>
+          </button>
+        </nav>
+
+        <!-- Notification Toast -->
+        <div class="hud-toast" id="hudToast">Action Completed</div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
